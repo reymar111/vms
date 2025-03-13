@@ -2,6 +2,10 @@
 import { Head, Link } from '@inertiajs/vue3';
 
 export default {
+    components: {
+        Head,
+        Link
+    },
     data () {
         return {
 
@@ -553,8 +557,8 @@ export default {
             </a>
           </li>
           <li>
-            <a
-              href="#"
+            <Link
+              :href="route('status.index')"
               class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
             >
               <svg
@@ -569,7 +573,7 @@ export default {
                 ></path>
               </svg>
               <span class="ml-3">Status</span>
-            </a>
+            </Link>
           </li>
           <li>
             <a
