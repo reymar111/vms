@@ -34,6 +34,8 @@ class StatusController extends Controller
         $status->name = $request->name;
         $status->save();
 
+        return to_route('status.index');
+
     }
 
     /**
@@ -47,6 +49,8 @@ class StatusController extends Controller
 
         $status->name = $request->name;
         $status->update();
+
+        return to_route('status.index');
     }
 
     /**
@@ -55,5 +59,7 @@ class StatusController extends Controller
     public function destroy(Status $status)
     {
         $status->delete();
+
+        return to_route('status.index');
     }
 }

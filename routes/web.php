@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
     // college
     Route::prefix('college')->group(function() {
         Route::get('/',[CollegeController::class, 'index'])->name('college.index');
-        Route::post('/store', [CollegeController::class, 'create'])->name('college.create');
+        Route::post('/store', [CollegeController::class, 'store'])->name('college.create');
         Route::patch('/update/{college}', [CollegeController::class, 'update'])->name('college.update');
         Route::delete('/destroy/{college}', [CollegeController::class, 'destroy'])->name('college.destroy');
     });
@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
     // status
     Route::prefix('status')->group(function() {
         Route::get('/',[StatusController::class, 'index'])->name('status.index');
-        Route::post('/store', [StatusController::class, 'create'])->name('status.create');
+        Route::post('/store', [StatusController::class, 'store'])->name('status.create');
         Route::patch('/update/{status}', [StatusController::class, 'update'])->name('status.update');
         Route::delete('/destroy/{status}', [StatusController::class, 'destroy'])->name('status.destroy');
     });
@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function () {
     // program
     Route::prefix('program')->group(function() {
         Route::get('/',[ProgramController::class, 'index'])->name('program.index');
-        Route::post('/store', [ProgramController::class, 'create'])->name('program.create');
+        Route::post('/store', [ProgramController::class, 'store'])->name('program.create');
         Route::patch('/update/{program}', [ProgramController::class, 'update'])->name('program.update');
         Route::delete('/destroy/{program}', [ProgramController::class, 'destroy'])->name('program.destroy');
     });
@@ -63,7 +63,7 @@ Route::middleware('auth')->group(function () {
     // violation
     Route::prefix('violation')->group(function() {
         Route::get('/',[ViolationController::class, 'index'])->name('violation.index');
-        Route::post('/store', [ViolationController::class, 'create'])->name('violation.create');
+        Route::post('/store', [ViolationController::class, 'store'])->name('violation.create');
         Route::patch('/update/{violation}', [ViolationController::class, 'update'])->name('violation.update');
         Route::delete('/destroy/{violation}', [ViolationController::class, 'destroy'])->name('violation.destroy');
     });
@@ -71,7 +71,7 @@ Route::middleware('auth')->group(function () {
     // violation category
     Route::prefix('violation_category')->group(function() {
         Route::get('/',[ViolationCategory::class, 'index'])->name('violation_category.index');
-        Route::post('/store', [ViolationCategory::class, 'create'])->name('violation_category.create');
+        Route::post('/store', [ViolationCategory::class, 'store'])->name('violation_category.create');
         Route::patch('/update/{violation_category}', [ViolationCategory::class, 'update'])->name('violation_category.update');
         Route::delete('/destroy/{violation_category}', [ViolationCategory::class, 'destroy'])->name('violation_category.destroy');
     });
@@ -79,7 +79,7 @@ Route::middleware('auth')->group(function () {
     // penalty
     Route::prefix('penalty')->group(function() {
         Route::get('/',[PenaltyController::class, 'index'])->name('penalty.index');
-        Route::post('/store', [PenaltyController::class, 'create'])->name('penalty.create');
+        Route::post('/store', [PenaltyController::class, 'store'])->name('penalty.create');
         Route::patch('/update/{penalty}', [PenaltyController::class, 'update'])->name('penalty.update');
         Route::delete('/destroy/{penalty}', [PenaltyController::class, 'destroy'])->name('penalty.destroy');
     });
@@ -87,7 +87,7 @@ Route::middleware('auth')->group(function () {
     // offense level
     Route::prefix('offense_level')->group(function() {
         Route::get('/',[OffenseLevel::class, 'index'])->name('offense_level.index');
-        Route::post('/store', [OffenseLevel::class, 'create'])->name('offense_level.create');
+        Route::post('/store', [OffenseLevel::class, 'store'])->name('offense_level.create');
         Route::patch('/update/{offense_level}', [OffenseLevel::class, 'update'])->name('offense_level.update');
         Route::delete('/destroy/{offense_level}', [OffenseLevel::class, 'destroy'])->name('offense_level.destroy');
     });
@@ -95,7 +95,7 @@ Route::middleware('auth')->group(function () {
     // penalty action
     Route::prefix('penalty_action')->group(function() {
         Route::get('/',[OffenseLevel::class, 'index'])->name('penalty_action.index');
-        Route::post('/store', [OffenseLevel::class, 'create'])->name('penalty_action.create');
+        Route::post('/store', [OffenseLevel::class, 'store'])->name('penalty_action.create');
         Route::patch('/update/{penalty_action}', [OffenseLevel::class, 'update'])->name('penalty_action.update');
         Route::delete('/destroy/{penalty_action}', [OffenseLevel::class, 'destroy'])->name('penalty_action.destroy');
     });
