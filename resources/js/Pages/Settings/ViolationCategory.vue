@@ -6,7 +6,7 @@
                     class="overflow-hidden bg-white shadow-lg sm:rounded-lg"
                 >
                 <div class="p-6 text-gray-900 flex flex-col md:flex-row md:justify-between md:items-center space-y-4 md:space-y-0 ">
-                    <h3 class="text-2xl font-bold ">Settings - Status</h3>
+                    <h3 class="text-2xl font-bold ">Settings - Violation Category</h3>
 
                 </div>
 
@@ -16,7 +16,7 @@
                             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                         </svg>
                         <div class="ms-3 text-sm font-medium">
-                            Status Created Successfully.
+                            Violation Category Created Successfully.
                         </div>
                         <button @click="is_created = false" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-border-1" aria-label="Close">
                             <span class="sr-only">Dismiss</span>
@@ -31,7 +31,7 @@
                             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                         </svg>
                         <div class="ms-3 text-sm font-medium">
-                            Status Updated Successfully.
+                            Violation Category Updated Successfully.
                         </div>
                         <button @click="is_updated = false" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-yellow-50 text-yellow-500 rounded-lg focus:ring-2 focus:ring-yellow-400 p-1.5 hover:bg-yellow-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-border-1" aria-label="Close">
                             <span class="sr-only">Dismiss</span>
@@ -46,7 +46,7 @@
                             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                         </svg>
                         <div class="ms-3 text-sm font-medium">
-                            Status Deleted Successfully.
+                            Violation Category Deleted Successfully.
                         </div>
                         <button @click="is_deleted = false" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-border-1" aria-label="Close">
                             <span class="sr-only">Dismiss</span>
@@ -93,7 +93,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-b" v-for="(item, index) in filteredStatuses" :key="index">
+                            <tr class="border-b" v-for="(item, index) in filteredViolationCategories" :key="index">
                                 <td class="px-4 py-2">{{ index + 1 }}</td>
                                 <td class="px-4 py-2">{{ item.name }}</td>
                                 <td class="px-4 py-2 flex space-x-2">
@@ -124,7 +124,7 @@
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
                         <h3 class="text-xl font-semibold text-gray-900 ">
-                            {{ form.is_editing ? 'Edit' : 'Create' }} Status
+                            {{ form.is_editing ? 'Edit' : 'Create' }} Violation Category
                         </h3>
                         <button @click="closeForm" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center " data-modal-hide="default-modal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -158,7 +158,7 @@
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
                         <h3 class="text-xl font-semibold text-gray-900 ">
-                            Delete this status?
+                            Delete this violation category?
                         </h3>
                         <button @click="closeForm" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center " data-modal-hide="default-modal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -191,7 +191,7 @@ import { useForm, Link } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 export default {
-    props: ['statuses'],
+    props: ['violation_categories'],
     components: {
         AuthenticatedLayout,
         Link
@@ -227,11 +227,11 @@ export default {
 
     },
     computed: {
-        filteredStatuses() {
-            if (!this.search) return this.statuses;
+        filteredViolationCategories() {
+            if (!this.search) return this.violation_categories;
 
-            return this.statuses.filter(status => {
-                return Object.values(status).some(value =>
+            return this.violation_categories.filter(category => {
+                return Object.values(category).some(value =>
                     String(value).toLowerCase().includes(this.search.toLowerCase())
                 );
             });
@@ -270,7 +270,7 @@ export default {
         },
 
         save() {
-            this.form.post('/status/store', {
+            this.form.post('/violation_category/store', {
                 onSuccess: () => {
                     this.closeForm()
                     this.is_created = true
@@ -282,7 +282,7 @@ export default {
         },
 
         update() {
-            this.form.patch('/status/update/'+this.form.id, {
+            this.form.patch('/violation_category/update/'+this.form.id, {
                 onSuccess: () => {
                     this.closeForm()
                     this.is_updated = true
@@ -294,7 +294,7 @@ export default {
         },
 
         deleteItem() {
-            this.form.delete('/status/destroy/'+this.delete_form.id, {
+            this.form.delete('/violation_category/destroy/'+this.delete_form.id, {
                 onSuccess: () => {
                     this.CloseDeleteForm()
                     this.is_deleted = true

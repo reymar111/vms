@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\College;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,12 @@ class CollegeController extends Controller
      */
     public function index()
     {
-        //
+        $colleges = College::all();
+
+        return Inertia::render('Settings/College',
+        [
+            'colleges' => $colleges,
+        ]);
     }
 
     /**
@@ -30,6 +36,8 @@ class CollegeController extends Controller
         $college->description = $request->description;
         $college->save();
 
+        return to_route('college.index');
+
     }
 
     /**
@@ -45,6 +53,8 @@ class CollegeController extends Controller
         $college->code = $request->code;
         $college->description = $request->description;
         $college->update();
+
+        return to_route('college.index');
     }
 
     /**
@@ -53,5 +63,7 @@ class CollegeController extends Controller
     public function destroy(College $college)
     {
         $college->delete();
+
+        return to_route('college.index');
     }
 }

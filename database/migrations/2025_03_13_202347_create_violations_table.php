@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->integer('violation_category_id');
-            $table->integer('penalty_id')->nullable();
             $table->timestamps();
         });
     }

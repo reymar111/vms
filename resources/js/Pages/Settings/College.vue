@@ -6,7 +6,7 @@
                     class="overflow-hidden bg-white shadow-lg sm:rounded-lg"
                 >
                 <div class="p-6 text-gray-900 flex flex-col md:flex-row md:justify-between md:items-center space-y-4 md:space-y-0 ">
-                    <h3 class="text-2xl font-bold ">Settings - Status</h3>
+                    <h3 class="text-2xl font-bold ">Settings - Colleges</h3>
 
                 </div>
 
@@ -16,7 +16,7 @@
                             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                         </svg>
                         <div class="ms-3 text-sm font-medium">
-                            Status Created Successfully.
+                            College Created Successfully.
                         </div>
                         <button @click="is_created = false" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-border-1" aria-label="Close">
                             <span class="sr-only">Dismiss</span>
@@ -31,7 +31,7 @@
                             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                         </svg>
                         <div class="ms-3 text-sm font-medium">
-                            Status Updated Successfully.
+                            College Updated Successfully.
                         </div>
                         <button @click="is_updated = false" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-yellow-50 text-yellow-500 rounded-lg focus:ring-2 focus:ring-yellow-400 p-1.5 hover:bg-yellow-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-border-1" aria-label="Close">
                             <span class="sr-only">Dismiss</span>
@@ -46,7 +46,7 @@
                             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                         </svg>
                         <div class="ms-3 text-sm font-medium">
-                            Status Deleted Successfully.
+                            College Deleted Successfully.
                         </div>
                         <button @click="is_deleted = false" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-border-1" aria-label="Close">
                             <span class="sr-only">Dismiss</span>
@@ -88,14 +88,16 @@
                         <thead class="bg-gray-100">
                             <tr>
                                 <th class="px-4 py-2 text-left text-gray-700 border-b">#</th>
-                                <th class="px-4 py-2 text-left text-gray-700 border-b">Name</th>
+                                <th class="px-4 py-2 text-left text-gray-700 border-b">Code</th>
+                                <th class="px-4 py-2 text-left text-gray-700 border-b">Description</th>
                                 <th class="px-4 py-2 text-left text-gray-700 border-b">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-b" v-for="(item, index) in filteredStatuses" :key="index">
+                            <tr class="border-b" v-for="(item, index) in filteredColleges" :key="index">
                                 <td class="px-4 py-2">{{ index + 1 }}</td>
-                                <td class="px-4 py-2">{{ item.name }}</td>
+                                <td class="px-4 py-2">{{ item.code }}</td>
+                                <td class="px-4 py-2">{{ item.description }}</td>
                                 <td class="px-4 py-2 flex space-x-2">
                                     <button @click="editItem(item)" class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
                                         Edit
@@ -112,8 +114,6 @@
 
                 </div>
             </div>
-
-
         </div>
 
         <!-- Main modal -->
@@ -124,7 +124,7 @@
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
                         <h3 class="text-xl font-semibold text-gray-900 ">
-                            {{ form.is_editing ? 'Edit' : 'Create' }} Status
+                            {{ form.is_editing ? 'Edit' : 'Create' }} College
                         </h3>
                         <button @click="closeForm" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center " data-modal-hide="default-modal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -136,10 +136,16 @@
                     <!-- Modal body -->
                     <div class="p-4 md:p-5 space-y-4">
                         <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Name</label>
-                            <input v-model="form.name" type="text" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
+                            <label class="block mb-2 text-sm font-medium text-gray-900 ">Code</label>
+                            <input v-model="form.code" type="text"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
+                        </div>
+
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 ">Description</label>
+                            <input v-model="form.description" type="text"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
                         </div>
                     </div>
+
                     <!-- Modal footer -->
                     <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
                         <button @click="save" v-if="form.is_editing === false" data-modal-hide="default-modal" type="button" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Save</button>
@@ -158,7 +164,7 @@
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
                         <h3 class="text-xl font-semibold text-gray-900 ">
-                            Delete this status?
+                            Delete this college?
                         </h3>
                         <button @click="closeForm" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center " data-modal-hide="default-modal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -170,7 +176,7 @@
                     <!-- Modal body -->
                     <div class="p-4 md:p-5 space-y-4">
                         <div>
-                            {{ delete_form.name }}
+                            {{ delete_form.code }} - {{ delete_form.description }}
                         </div>
                     </div>
                     <!-- Modal footer -->
@@ -191,7 +197,7 @@ import { useForm, Link } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 export default {
-    props: ['statuses'],
+    props: ['colleges'],
     components: {
         AuthenticatedLayout,
         Link
@@ -201,6 +207,8 @@ export default {
         return {
             form: useForm({
                 id: '',
+                code: '',
+                description: '',
                 name: '',
                 active: false,
                 is_editing: false,
@@ -208,7 +216,8 @@ export default {
 
             delete_form: useForm({
                 id: '',
-                name: '',
+                code: '',
+                description: '',
                 active: false,
             }),
 
@@ -220,18 +229,17 @@ export default {
 
             search: '',
 
-
         }
     },
     mounted() {
 
     },
     computed: {
-        filteredStatuses() {
-            if (!this.search) return this.statuses;
+        filteredColleges() {
+            if (!this.search) return this.colleges;
 
-            return this.statuses.filter(status => {
-                return Object.values(status).some(value =>
+            return this.colleges.filter(college => {
+                return Object.values(college).some(value =>
                     String(value).toLowerCase().includes(this.search.toLowerCase())
                 );
             });
@@ -245,32 +253,36 @@ export default {
 
         closeForm() {
             this.form.id = ''
-            this.form.name = ''
+            this.form.code = ''
+            this.form.description = ''
             this.form.active = false
             this.form.is_editing = false
         },
 
         editItem(item) {
             this.form.id = item.id
-            this.form.name = item.name
+            this.form.code = item.code
+            this.form.description = item.description
             this.form.active = true
             this.form.is_editing = true
         },
 
         OpenDeleteForm(item) {
             this.delete_form.id = item.id
-            this.delete_form.name = item.name
+            this.delete_form.code = item.code
+            this.delete_form.description = item.description
             this.delete_form.active = true
         },
 
         CloseDeleteForm() {
             this.delete_form.id = ''
-            this.delete_form.name = ''
+            this.delete_form.code = ''
+            this.delete_form.description = ''
             this.delete_form.active = false
         },
 
         save() {
-            this.form.post('/status/store', {
+            this.form.post('/college/store', {
                 onSuccess: () => {
                     this.closeForm()
                     this.is_created = true
@@ -282,7 +294,7 @@ export default {
         },
 
         update() {
-            this.form.patch('/status/update/'+this.form.id, {
+            this.form.patch('/college/update/'+this.form.id, {
                 onSuccess: () => {
                     this.closeForm()
                     this.is_updated = true
@@ -294,7 +306,7 @@ export default {
         },
 
         deleteItem() {
-            this.form.delete('/status/destroy/'+this.delete_form.id, {
+            this.form.delete('/college/destroy/'+this.delete_form.id, {
                 onSuccess: () => {
                     this.CloseDeleteForm()
                     this.is_deleted = true

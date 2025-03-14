@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\College;
+use Inertia\Inertia;
 use App\Models\Program;
 use Illuminate\Http\Request;
 
@@ -12,7 +14,14 @@ class ProgramController extends Controller
      */
     public function index()
     {
-        //
+        $programs = Program::with('college')->get();
+        $colleges = College::all();
+
+        return Inertia::render('Settings/Program',
+        [
+            'colleges' => $colleges,
+            'programs' => $programs,
+        ]);
     }
 
     /**
@@ -32,6 +41,8 @@ class ProgramController extends Controller
         $program->description = $request->description;
         $program->save();
 
+        return to_route('program.index');
+
     }
 
     /**
@@ -48,6 +59,8 @@ class ProgramController extends Controller
         $program->code = $request->code;
         $program->description = $request->description;
         $program->update();
+
+        return to_route('program.index');
     }
 
     /**
@@ -56,5 +69,7 @@ class ProgramController extends Controller
     public function destroy(Program $program)
     {
         $program->delete();
+
+        return to_route('program.index');
     }
 }

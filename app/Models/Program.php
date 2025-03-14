@@ -11,4 +11,11 @@ class Program extends Model
     protected $fillable = [
         'code', 'description'
     ];
+
+    public function college()
+    {
+
+        return $this->belongsTo(College::class, 'college_id', 'id');
+
+    }
 }

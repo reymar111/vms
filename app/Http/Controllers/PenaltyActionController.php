@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PenaltyAction;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Models\PenaltyAction;
 
 class PenaltyActionController extends Controller
 {
@@ -12,7 +13,12 @@ class PenaltyActionController extends Controller
      */
     public function index()
     {
-        //
+        $penalty_actions = PenaltyAction::all();
+
+        return Inertia::render('Settings/PenaltyAction',
+        [
+            'penalty_actions' => $penalty_actions,
+        ]);
     }
 
     /**
@@ -28,6 +34,8 @@ class PenaltyActionController extends Controller
         $action->name = $request->name;
         $action->save();
 
+        return to_route('penalty_action.index');
+
     }
 
     /**
@@ -41,6 +49,8 @@ class PenaltyActionController extends Controller
 
         $penalty_action->name = $request->name;
         $penalty_action->update();
+
+        return to_route('penalty_action.index');
     }
 
     /**
@@ -49,5 +59,7 @@ class PenaltyActionController extends Controller
     public function destroy(PenaltyAction $penalty_action)
     {
         $penalty_action->delete();
+
+        return to_route('penalty_action.index');
     }
 }

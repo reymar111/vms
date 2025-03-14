@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ViolationCategory;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Models\ViolationCategory;
 
 class ViolationCategoryController extends Controller
 {
@@ -12,7 +13,12 @@ class ViolationCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $violation_categories = ViolationCategory::all();
+
+        return Inertia::render('Settings/ViolationCategory',
+        [
+            'violation_categories' => $violation_categories,
+        ]);
     }
 
     /**
@@ -28,6 +34,8 @@ class ViolationCategoryController extends Controller
         $violation_category->name = $request->name;
         $violation_category->save();
 
+        return to_route('violation_category.index');
+
     }
 
     /**
@@ -42,6 +50,8 @@ class ViolationCategoryController extends Controller
         $violation_category->name = $request->name;
         $violation_category->update();
 
+        return to_route('violation_category.index');
+
     }
 
     /**
@@ -50,5 +60,7 @@ class ViolationCategoryController extends Controller
     public function destroy(ViolationCategory $violation_category)
     {
         $violation_category->delete();
+
+        return to_route('violation_category.index');
     }
 }

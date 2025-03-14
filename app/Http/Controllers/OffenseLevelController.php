@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\OffenseLevel;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,12 @@ class OffenseLevelController extends Controller
      */
     public function index()
     {
-        //
+        $offense_levels = OffenseLevel::all();
+
+        return Inertia::render('Settings/OffenseLevel',
+        [
+            'offense_levels' => $offense_levels,
+        ]);
     }
 
     /**
@@ -28,6 +34,8 @@ class OffenseLevelController extends Controller
         $offense_level->name = $request->name;
         $offense_level->save();
 
+        return to_route('offense_level.index');
+
     }
 
     /**
@@ -41,6 +49,8 @@ class OffenseLevelController extends Controller
 
         $offense_level->name = $request->name;
         $offense_level->update();
+
+        return to_route('offense_level.index');
     }
 
     /**
@@ -49,5 +59,7 @@ class OffenseLevelController extends Controller
     public function destroy(OffenseLevel $offense_level)
     {
         $offense_level->delete();
+
+        return to_route('offense_level.index');
     }
 }
