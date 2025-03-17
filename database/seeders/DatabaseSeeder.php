@@ -2,13 +2,17 @@
 
 namespace Database\Seeders;
 
+use App\Models\AcademicYear;
 use App\Models\User;
 use App\Models\College;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Program;
+use App\Models\Student;
 use App\Models\Violation;
 use App\Models\OffenseLevel;
 use App\Models\PenaltyAction;
+use App\Models\Semester;
+use App\Models\Status;
 use Illuminate\Database\Seeder;
 use App\Models\ViolationCategory;
 use Illuminate\Support\Facades\DB;
@@ -202,14 +206,12 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Littering',
                 'description' => 'Throwing garbage in unauthorized areas within campus.',
                 'violation_category_id' => $violationCategories['Minor Offenses']->id ?? null,
-                'penalty_id' => 1,
             ],
             [
                 'code' => 'MIN-002',
                 'name' => 'Dress Code Violation',
                 'description' => 'Failure to comply with the university’s dress code policy.',
                 'violation_category_id' => $violationCategories['Minor Offenses']->id ?? null,
-                'penalty_id' => 1,
             ],
 
             // Major Offenses
@@ -218,14 +220,12 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Vandalism',
                 'description' => 'Defacing school property such as walls, desks, or books.',
                 'violation_category_id' => $violationCategories['Major Offenses']->id ?? null,
-                'penalty_id' => 1,
             ],
             [
                 'code' => 'MAJ-002',
                 'name' => 'Physical Altercation',
                 'description' => 'Engaging in fights or causing harm to others.',
                 'violation_category_id' => $violationCategories['Major Offenses']->id ?? null,
-                'penalty_id' => 1,
             ],
 
             // Academic Integrity Violations
@@ -234,14 +234,12 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Plagiarism',
                 'description' => 'Copying work from others without proper attribution.',
                 'violation_category_id' => $violationCategories['Academic Integrity Violations']->id ?? null,
-                'penalty_id' => 1,
             ],
             [
                 'code' => 'AIV-002',
                 'name' => 'Cheating',
                 'description' => 'Using unauthorized materials during exams.',
                 'violation_category_id' => $violationCategories['Academic Integrity Violations']->id ?? null,
-                'penalty_id' => 1,
             ],
 
             // Disciplinary Infractions
@@ -250,14 +248,12 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Disrespect to Faculty',
                 'description' => 'Showing verbal or physical disrespect to teachers or staff.',
                 'violation_category_id' => $violationCategories['Disciplinary Infractions']->id ?? null,
-                'penalty_id' => 1,
             ],
             [
                 'code' => 'DIS-002',
                 'name' => 'Unauthorized Protest',
                 'description' => 'Engaging in protests without proper authorization.',
                 'violation_category_id' => $violationCategories['Disciplinary Infractions']->id ?? null,
-                'penalty_id' => 1,
             ],
 
             // Campus Policy Violations
@@ -266,14 +262,12 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Smoking in Campus',
                 'description' => 'Smoking in prohibited areas inside the university.',
                 'violation_category_id' => $violationCategories['Campus Policy Violations']->id ?? null,
-                'penalty_id' => 1,
             ],
             [
                 'code' => 'CPV-002',
                 'name' => 'Unauthorized Entry',
                 'description' => 'Entering restricted areas without permission.',
                 'violation_category_id' => $violationCategories['Campus Policy Violations']->id ?? null,
-                'penalty_id' => 1,
             ],
         ];
 
@@ -303,6 +297,61 @@ class DatabaseSeeder extends Seeder
 
         foreach($users as $user) {
             DB::table('users')->insert($user);
+        }
+
+
+        foreach (range(1, 50) as $index) {
+            Student::create([
+                'id_number' => fake()->unique()->numerify('2025####'),
+                'first_name' => fake()->firstName,
+                'middle_name' => fake()->firstName,
+                'last_name' => fake()->lastName,
+                'ext_name' => fake()->randomElement(['Jr.', 'Sr.', 'III', null]),
+                'address' => fake()->address,
+                'contact_number' => fake()->phoneNumber,
+                'email_address' => fake()->unique()->safeEmail,
+                'program_id' => \App\Models\Program::inRandomOrder()->first()->id ?? 1,
+            ]);
+        }
+
+        $status = [
+            'New',
+            'Open',
+            'Closed',
+            'Resolved',
+            'Escalated'
+        ];
+
+        foreach($status as $stat) {
+            Status::create([
+                'name' => $stat
+            ]);
+        }
+
+        $semesters = [
+            'First Semester',
+            'Second Semester',
+            'Midyear Semester'
+        ];
+
+        foreach($semesters as $sem) {
+            Semester::create([
+                'name' => $sem
+            ]);
+        }
+
+        foreach(range(2017, 2025) as $index)
+        {
+            $semester = Semester::all();
+
+            foreach($semester as $sem) {
+                AcademicYear::create([
+                    'code' => $index,
+                    'year' => $index,
+                    'semester_id' => $sem->id
+                ]);
+            }
+
         }
 
 

@@ -1,0 +1,100 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Inertia\Inertia;
+use App\Models\Status;
+use App\Models\Violation;
+use Illuminate\Support\Str;
+use App\Models\OffenseLevel;
+use Illuminate\Http\Request;
+use App\Models\PenaltyAction;
+use App\Models\TransactionViolation;
+use App\Models\ViolationCategory;
+
+class TransactionViolationController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $violations = TransactionViolation::with([
+            'student',
+            'violation',
+            'offense_level',
+            'penalty_action',
+            'status'
+        ])->get();
+
+        $violations = Violation::all();
+        $offense_levels = OffenseLevel::all();
+        $penalty_actions = PenaltyAction::all();
+        $statuses = Status::all();
+
+        return Inertia::render('TransactionViolation',
+        [
+            'violations' => $violations,
+            'offense_levels' => $offense_levels,
+            'penalty_actions' => $penalty_actions,
+            'statuses' => $statuses,
+
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'student_id' => ['required'],
+            'violation_id' => ['required'],
+        ]);
+
+        $violation = new TransactionViolation();
+        $violation->transaction_number = 'VLN-'.Str::random(6);
+        $violation->student_id = $request->student_id;
+        $violation->violation_id = $request->violation_id;
+        $violation->offense_level_id = $request->offense_level_id;
+        $violation->penalty_action_id = $request->penalty_action_id;
+        $violation->status_id = $request->status_id;
+        $violation->remarks = $request->remarks;
+        $violation->save();
+
+        return to_route('transaction_violation.index');
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, TransactionViolation $transaction_violation)
+    {
+        $request->validate([
+            'student_id' => ['required'],
+            'violation_id' => ['required'],
+        ]);
+
+        $transaction_violation->transaction_number = 'VLN-'.Str::random(6);
+        $transaction_violation->student_id = $request->student_id;
+        $transaction_violation->violation_id = $request->violation_id;
+        $transaction_violation->offense_level_id = $request->offense_level_id;
+        $transaction_violation->penalty_action_id = $request->penalty_action_id;
+        $transaction_violation->status_id = $request->status_id;
+        $transaction_violation->remarks = $request->remarks;
+        $transaction_violation->update();
+
+        return to_route('transaction_violation.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(TransactionViolation $transaction_violation)
+    {
+        $transaction_violation->delete();
+
+        return to_route('transaction_violation.index');
+    }
+}

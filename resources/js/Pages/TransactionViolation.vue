@@ -1,6 +1,6 @@
 <template>
     <AuthenticatedLayout>
-        <Head title="Settings / Violations" />
+        <Head title="Violations" />
 
         <div class="py-1">
             <div class="mx-auto sm:px-6 lg:px-8">
@@ -8,7 +8,7 @@
                     class="overflow-hidden bg-white shadow-lg sm:rounded-lg"
                 >
                 <div class="p-6 text-gray-900 flex flex-col md:flex-row md:justify-between md:items-center space-y-4 md:space-y-0 ">
-                    <h3 class="text-2xl font-bold ">Settings - Violation</h3>
+                    <h3 class="text-2xl font-bold ">Student Violations</h3>
 
                 </div>
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use App\Models\Program;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
@@ -12,7 +14,14 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        $students = Student::with('program')->get();
+        $programs = Program::all();
+
+        return Inertia::render('Settings/Student',
+        [
+            'students' => $students,
+            'programs' => $programs,
+        ]);
     }
 
     /**
@@ -41,6 +50,8 @@ class StudentController extends Controller
         $student->program_id = $request->program_id;
         $student->save();
 
+        return to_route('student.index');
+
     }
 
     /**
@@ -67,6 +78,8 @@ class StudentController extends Controller
         $student->email_address = $request->email_address;
         $student->program_id = $request->program_id;
         $student->update();
+
+        return to_route('student.index');
     }
 
     /**
@@ -75,5 +88,7 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete();
+
+        return to_route('student.index');
     }
 }

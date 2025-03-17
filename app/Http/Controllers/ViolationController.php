@@ -32,14 +32,14 @@ class ViolationController extends Controller
         $request->validate([
             'code' => ['required'],
             'name' => ['required'],
-            'category_id' => ['required'],
+            'violation_category_id' => ['required'],
         ]);
 
         $violation = new Violation();
         $violation->code = $request->code;
         $violation->name = $request->name;
         $violation->description = $request->description;
-        $violation->category_id = $request->category_id;
+        $violation->violation_category_id = $request->violation_category_id;
         $violation->save();
 
         return to_route('violation.index');
@@ -54,13 +54,13 @@ class ViolationController extends Controller
         $request->validate([
             'code' => ['required'],
             'name' => ['required'],
-            'category_id' => ['required'],
+            'violation_category_id' => ['required'],
         ]);
 
         $violation->code = $request->code;
         $violation->name = $request->name;
         $violation->description = $request->description;
-        $violation->category_id = $request->category_id;
+        $violation->violation_category_id = $request->violation_category_id;
         $violation->update();
 
         return to_route('violation.index');

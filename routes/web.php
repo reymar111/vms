@@ -1,12 +1,16 @@
 <?php
 
+use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\CollegeController;
 use App\Http\Controllers\OffenseLevelController;
 use App\Http\Controllers\PenaltyActionController;
 use App\Http\Controllers\PenaltyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TransactionViolationController;
 use App\Http\Controllers\ViolationCategoryController;
 use App\Http\Controllers\ViolationController;
 use App\Models\OffenseLevel;
@@ -39,6 +43,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 // SETTINGS
+    // student
+    Route::prefix('student')->group(function() {
+        Route::get('/',[StudentController::class, 'index'])->name('student.index');
+        Route::post('/store', [StudentController::class, 'store'])->name('student.store');
+        Route::patch('/update/{student}', [StudentController::class, 'update'])->name('student.update');
+        Route::delete('/destroy/{student}', [StudentController::class, 'destroy'])->name('student.destroy');
+    });
+
     // college
     Route::prefix('college')->group(function() {
         Route::get('/',[CollegeController::class, 'index'])->name('college.index');
@@ -102,6 +114,31 @@ Route::middleware('auth')->group(function () {
         Route::patch('/update/{penalty_action}', [PenaltyActionController::class, 'update'])->name('penalty_action.update');
         Route::delete('/destroy/{penalty_action}', [PenaltyActionController::class, 'destroy'])->name('penalty_action.destroy');
     });
+
+    // semester
+    Route::prefix('semester')->group(function() {
+        Route::get('/',[SemesterController::class, 'index'])->name('semester.index');
+        Route::post('/store', [SemesterController::class, 'store'])->name('semester.store');
+        Route::patch('/update/{semester}', [SemesterController::class, 'update'])->name('semester.update');
+        Route::delete('/destroy/{semester}', [SemesterController::class, 'destroy'])->name('semester.destroy');
+    });
+
+    // academic year
+    Route::prefix('academic_year')->group(function() {
+        Route::get('/',[AcademicYearController::class, 'index'])->name('academic_year.index');
+        Route::post('/store', [AcademicYearController::class, 'store'])->name('academic_year.store');
+        Route::patch('/update/{academic_year}', [AcademicYearController::class, 'update'])->name('academic_year.update');
+        Route::delete('/destroy/{academic_year}', [AcademicYearController::class, 'destroy'])->name('academic_year.destroy');
+    });
+
+    // transaction violation
+    Route::prefix('transaction_violation')->group(function() {
+        Route::get('/',[TransactionViolationController::class, 'index'])->name('transaction_violation.index');
+        Route::post('/store', [TransactionViolationController::class, 'store'])->name('transaction_violation.store');
+        Route::patch('/update/{transaction_violation}', [TransactionViolationController::class, 'update'])->name('transaction_violation.update');
+        Route::delete('/destroy/{transaction_violation}', [TransactionViolationController::class, 'destroy'])->name('transaction_violation.destroy');
+    });
+
 });
 
 require __DIR__.'/auth.php';

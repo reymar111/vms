@@ -1,5 +1,7 @@
 <template>
     <AuthenticatedLayout>
+        <Head title="Settings / Offense Level" />
+
         <div class="py-1">
             <div class="mx-auto sm:px-6 lg:px-8">
                 <div
@@ -97,10 +99,16 @@
                                 <td class="px-4 py-2">{{ index + 1 }}</td>
                                 <td class="px-4 py-2">{{ item.name }}</td>
                                 <td class="px-4 py-2 flex space-x-2">
-                                    <button @click="editItem(item)" class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                                    <button @click="editItem(item)" type="button" class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center me-2">
+                                    <svg class="w-6 h-6 text-white-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                                    </svg>
                                         Edit
                                     </button>
-                                    <button @click="OpenDeleteForm(item)" class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600">
+                                    <button  @click="OpenDeleteForm(item)" type="button" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center me-2">
+                                        <svg class="w-6 h-6 text-white-800 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                                        </svg>
                                         Delete
                                     </button>
                                 </td>
@@ -187,14 +195,15 @@
 </template>
 
 <script>
-import { useForm, Link } from '@inertiajs/vue3';
+import { useForm, Link, Head } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 export default {
     props: ['offense_levels'],
     components: {
         AuthenticatedLayout,
-        Link
+        Link,
+        Head
 
     },
     data() {
