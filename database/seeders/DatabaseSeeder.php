@@ -11,10 +11,12 @@ use App\Models\Student;
 use App\Models\Violation;
 use App\Models\OffenseLevel;
 use App\Models\PenaltyAction;
+use App\Models\Section;
 use App\Models\Semester;
 use App\Models\Status;
 use Illuminate\Database\Seeder;
 use App\Models\ViolationCategory;
+use App\Models\YearLevel;
 use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
@@ -299,6 +301,34 @@ class DatabaseSeeder extends Seeder
             DB::table('users')->insert($user);
         }
 
+        $year_levels = [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+        ];
+
+        foreach($year_levels as $level) {
+            YearLevel::create([
+                'name' => $level
+            ]);
+        }
+
+        $sections = [
+            'A',
+            'B',
+            'C',
+            'D',
+            'E',
+        ];
+
+        foreach($sections as $sec) {
+            Section::create([
+                'name' => $sec
+            ]);
+        }
+
 
         foreach (range(1, 50) as $index) {
             Student::create([
@@ -311,6 +341,8 @@ class DatabaseSeeder extends Seeder
                 'contact_number' => fake()->phoneNumber,
                 'email_address' => fake()->unique()->safeEmail,
                 'program_id' => \App\Models\Program::inRandomOrder()->first()->id ?? 1,
+                'year_level_id' => \App\Models\YearLevel::inRandomOrder()->first()->id ?? 1,
+                'section_id' => \App\Models\Section::inRandomOrder()->first()->id ?? 1,
             ]);
         }
 
@@ -353,8 +385,6 @@ class DatabaseSeeder extends Seeder
             }
 
         }
-
-
 
     }
 }

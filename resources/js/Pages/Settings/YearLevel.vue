@@ -1,14 +1,14 @@
 <template>
     <AuthenticatedLayout>
+        <Head title="Settings / Year Level" />
 
-        <Head title="Settings / Students" />
         <div class="py-1">
             <div class="mx-auto sm:px-6 lg:px-8">
                 <div
                     class="overflow-hidden bg-white shadow-lg sm:rounded-lg"
                 >
                 <div class="p-6 text-gray-900 flex flex-col md:flex-row md:justify-between md:items-center space-y-4 md:space-y-0 ">
-                    <h3 class="text-2xl font-bold ">Settings - Students</h3>
+                    <h3 class="text-2xl font-bold ">Settings - Year Level</h3>
 
                 </div>
 
@@ -18,7 +18,7 @@
                             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                         </svg>
                         <div class="ms-3 text-sm font-medium">
-                            Student Created Successfully.
+                            Year Level Created Successfully.
                         </div>
                         <button @click="is_created = false" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-border-1" aria-label="Close">
                             <span class="sr-only">Dismiss</span>
@@ -33,7 +33,7 @@
                             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                         </svg>
                         <div class="ms-3 text-sm font-medium">
-                            Student Updated Successfully.
+                            Year Level Updated Successfully.
                         </div>
                         <button @click="is_updated = false" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-yellow-50 text-yellow-500 rounded-lg focus:ring-2 focus:ring-yellow-400 p-1.5 hover:bg-yellow-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-border-1" aria-label="Close">
                             <span class="sr-only">Dismiss</span>
@@ -48,7 +48,7 @@
                             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                         </svg>
                         <div class="ms-3 text-sm font-medium">
-                            Student Deleted Successfully.
+                            Year Level Deleted Successfully.
                         </div>
                         <button @click="is_deleted = false" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-border-1" aria-label="Close">
                             <span class="sr-only">Dismiss</span>
@@ -90,20 +90,14 @@
                         <thead class="bg-gray-100">
                             <tr>
                                 <th class="px-4 py-2 text-left text-gray-700 border-b">#</th>
-                                <th class="px-4 py-2 text-left text-gray-700 border-b">ID Number</th>
                                 <th class="px-4 py-2 text-left text-gray-700 border-b">Name</th>
-                                <th class="px-4 py-2 text-left text-gray-700 border-b">Address</th>
-                                <th class="px-4 py-2 text-left text-gray-700 border-b">Course</th>
                                 <th class="px-4 py-2 text-left text-gray-700 border-b">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-b" v-for="(item, index) in filteredStudents" :key="index">
+                            <tr class="border-b" v-for="(item, index) in filteredYearLevels" :key="index">
                                 <td class="px-4 py-2">{{ index + 1 }}</td>
-                                <td class="px-4 py-2">{{ item.id_number }}</td>
-                                <td class="px-4 py-2">{{ item.full_name }}</td>
-                                <td class="px-4 py-2">{{ item.address }}</td>
-                                <td class="px-4 py-2">{{ item.program != null ? item.program.code : '' }}</td>
+                                <td class="px-4 py-2">{{ item.name }}</td>
                                 <td class="px-4 py-2 flex space-x-2">
                                     <button @click="editItem(item)" type="button" class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center me-2">
                                     <svg class="w-6 h-6 text-white-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -138,7 +132,7 @@
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
                         <h3 class="text-xl font-semibold text-gray-900 ">
-                            {{ form.is_editing ? 'Edit' : 'Create' }} Student
+                            {{ form.is_editing ? 'Edit' : 'Create' }} Year Level
                         </h3>
                         <button @click="closeForm" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center " data-modal-hide="default-modal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -148,68 +142,11 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                    <!-- <div class="p-4 md:p-5 space-y-4"> -->
-                    <div class="p-1 md:p-5 grid grid-cols-1 md:grid-cols-2 gap-4 mb-0">
-
+                    <div class="p-4 md:p-5 space-y-4">
                         <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">First Name</label>
-                            <input v-model="form.first_name" type="text" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
+                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Name</label>
+                            <input v-model="form.name" type="number" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
                         </div>
-
-                        <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Middle Name</label>
-                            <input v-model="form.middle_name" type="text" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
-                        </div>
-
-                        <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Last Name</label>
-                            <input v-model="form.last_name" type="text" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
-                        </div>
-                        <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Ext Name</label>
-                            <input v-model="form.ext_name" type="text" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
-                        </div>
-                        <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email Address</label>
-                            <input v-model="form.email_address" type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
-                        </div>
-                        <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Contact #</label>
-                            <input v-model="form.contact_number" type="number" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
-                        </div>
-                        <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">ID #</label>
-                            <input v-model="form.id_number" type="text" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
-                        </div>
-                        <div>
-                            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course</label>
-                            <select v-model="form.program_id" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option v-for="(item, index) in programs" :key="index" :value="item.id">{{ item.code }} - {{ item.description }}</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Year Level</label>
-                            <select v-model="form.year_level_id" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option v-for="(item, index) in year_levels" :key="index" :value="item.id">{{ item.name}}</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Section</label>
-                            <select v-model="form.section_id" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option v-for="(item, index) in sections" :key="index" :value="item.id">{{ item.name }}</option>
-                            </select>
-                        </div>
-
-
-                    </div>
-                    <div class="p-4 md:p-5 space-y-4 mt-0">
-                        <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Address</label>
-                            <input v-model="form.address" type="text" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
-                        </div>
-
-
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
@@ -229,7 +166,7 @@
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
                         <h3 class="text-xl font-semibold text-gray-900 ">
-                            Delete this student?
+                            Delete this year level?
                         </h3>
                         <button @click="closeForm" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center " data-modal-hide="default-modal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -262,27 +199,18 @@ import { useForm, Link, Head } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 export default {
-    props: ['students', 'programs', 'sections', 'year_levels'],
+    props: ['year_levels'],
     components: {
         AuthenticatedLayout,
         Link,
         Head
+
     },
     data() {
         return {
             form: useForm({
                 id: '',
-                id_number: '',
-                first_name: '',
-                middle_name: '',
-                last_name: '',
-                ext_name: '',
-                address: '',
-                contact_number: '',
-                email_address: '',
-                program_id: '',
-                section_id: '',
-                year_level_id: '',
+                name: '',
                 active: false,
                 is_editing: false,
             }),
@@ -301,17 +229,18 @@ export default {
 
             search: '',
 
+
         }
     },
     mounted() {
 
     },
     computed: {
-        filteredStudents() {
-            if (!this.search) return this.students;
+        filteredYearLevels() {
+            if (!this.search) return this.year_levels;
 
-            return this.students.filter(student => {
-                return Object.values(student).some(value =>
+            return this.year_levels.filter(level => {
+                return Object.values(level).some(value =>
                     String(value).toLowerCase().includes(this.search.toLowerCase())
                 );
             });
@@ -325,41 +254,21 @@ export default {
 
         closeForm() {
             this.form.id = ''
-            this.form.id_number = ''
-            this.form.first_name = ''
-            this.form.middle_name = ''
-            this.form.last_name = ''
-            this.form.ext_name = ''
-            this.form.address = ''
-            this.form.contact_number = ''
-            this.form.email_address = ''
-            this.form.program_id = ''
-            this.form.year_level_id = ''
-            this.form.section_id = ''
+            this.form.name = ''
             this.form.active = false
             this.form.is_editing = false
         },
 
         editItem(item) {
             this.form.id = item.id
-            this.form.id_number = item.id_number
-            this.form.first_name = item.first_name
-            this.form.middle_name = item.middle_name
-            this.form.last_name = item.last_name
-            this.form.ext_name = item.ext_name
-            this.form.address = item.address
-            this.form.contact_number = item.contact_number
-            this.form.email_address = item.email_address
-            this.form.program_id = item.program_id
-            this.form.year_level_id = item.year_level_id
-            this.form.section_id = item.section_id
+            this.form.name = item.name
             this.form.active = true
             this.form.is_editing = true
         },
 
         OpenDeleteForm(item) {
             this.delete_form.id = item.id
-            this.delete_form.name = item.full_name
+            this.delete_form.name = item.name
             this.delete_form.active = true
         },
 
@@ -370,7 +279,7 @@ export default {
         },
 
         save() {
-            this.form.post('/student/store', {
+            this.form.post('/year_level/store', {
                 onSuccess: () => {
                     this.closeForm()
                     this.is_created = true
@@ -382,7 +291,7 @@ export default {
         },
 
         update() {
-            this.form.patch('/student/update/'+this.form.id, {
+            this.form.patch('/year_level/update/'+this.form.id, {
                 onSuccess: () => {
                     this.closeForm()
                     this.is_updated = true
@@ -394,7 +303,7 @@ export default {
         },
 
         deleteItem() {
-            this.form.delete('/student/destroy/'+this.delete_form.id, {
+            this.form.delete('/year_level/destroy/'+this.delete_form.id, {
                 onSuccess: () => {
                     this.CloseDeleteForm()
                     this.is_deleted = true

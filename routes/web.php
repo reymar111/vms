@@ -7,12 +7,14 @@ use App\Http\Controllers\PenaltyActionController;
 use App\Http\Controllers\PenaltyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TransactionViolationController;
 use App\Http\Controllers\ViolationCategoryController;
 use App\Http\Controllers\ViolationController;
+use App\Http\Controllers\YearLevelController;
 use App\Models\OffenseLevel;
 use App\Models\ViolationCategory;
 use Illuminate\Foundation\Application;
@@ -131,9 +133,26 @@ Route::middleware('auth')->group(function () {
         Route::delete('/destroy/{academic_year}', [AcademicYearController::class, 'destroy'])->name('academic_year.destroy');
     });
 
+    // year level
+    Route::prefix('year_level')->group(function() {
+        Route::get('/',[YearLevelController::class, 'index'])->name('year_level.index');
+        Route::post('/store', [YearLevelController::class, 'store'])->name('year_level.store');
+        Route::patch('/update/{year_level}', [YearLevelController::class, 'update'])->name('year_level.update');
+        Route::delete('/destroy/{year_level}', [YearLevelController::class, 'destroy'])->name('year_level.destroy');
+    });
+
+    // section
+    Route::prefix('section')->group(function() {
+        Route::get('/',[SectionController::class, 'index'])->name('section.index');
+        Route::post('/store', [SectionController::class, 'store'])->name('section.store');
+        Route::patch('/update/{section}', [SectionController::class, 'update'])->name('section.update');
+        Route::delete('/destroy/{section}', [SectionController::class, 'destroy'])->name('section.destroy');
+    });
+
     // transaction violation
     Route::prefix('transaction_violation')->group(function() {
         Route::get('/',[TransactionViolationController::class, 'index'])->name('transaction_violation.index');
+        Route::get('/create',[TransactionViolationController::class, 'create'])->name('transaction_violation.create');
         Route::post('/store', [TransactionViolationController::class, 'store'])->name('transaction_violation.store');
         Route::patch('/update/{transaction_violation}', [TransactionViolationController::class, 'update'])->name('transaction_violation.update');
         Route::delete('/destroy/{transaction_violation}', [TransactionViolationController::class, 'destroy'])->name('transaction_violation.destroy');

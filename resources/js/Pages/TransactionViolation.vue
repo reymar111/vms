@@ -59,12 +59,12 @@
                     </div>
 
                     <div class="mb-2 text-gray-900 flex flex-col md:flex-row md:justify-between md:items-center space-y-4 md:space-y-0 ">
-                            <button @click="openForm" class="px-4 py-2 mb-2 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center space-x-2">
+                            <Link :href="route('transaction_violation.create')" class="px-4 py-2 mb-2 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center space-x-2">
                                 <svg class="w-6 h-6 text-white-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
                                 </svg>
                                     <span>New Item</span>
-                            </button>
+                            </Link>
 
                             <!-- header -->
                             <div class="flex items-center space-x-2 w-full md:w-auto">
@@ -227,7 +227,6 @@ export default {
         AuthenticatedLayout,
         Link,
         Head
-
     },
     data() {
         return {

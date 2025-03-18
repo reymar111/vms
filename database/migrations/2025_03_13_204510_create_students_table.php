@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('contact_number');
             $table->string('email_address');
             $table->integer('program_id');
+            $table->integer('year_level_id')->nullable();
+            $table->integer('section_id')->nullable();
             $table->timestamps();
         });
     }

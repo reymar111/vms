@@ -18,6 +18,20 @@ class Student extends Model
 
     }
 
+    public function year_level()
+    {
+
+        return $this->belongsTo(YearLevel::class, 'year_level_id', 'id');
+
+    }
+
+    public function section()
+    {
+
+        return $this->belongsTo(Section::class, 'section_id', 'id');
+
+    }
+
     public function getFullNameAttribute()
     {
 

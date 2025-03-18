@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Program;
+use App\Models\Section;
 use App\Models\Student;
+use App\Models\YearLevel;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -14,13 +16,17 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::with('program')->get();
+        $students = Student::with(['program', 'year_level', 'section'])->get();
         $programs = Program::all();
+        $year_levels = YearLevel::all();
+        $sections = Section::all();
 
         return Inertia::render('Settings/Student',
         [
             'students' => $students,
             'programs' => $programs,
+            'year_levels' => $year_levels,
+            'sections' => $sections,
         ]);
     }
 
@@ -48,6 +54,8 @@ class StudentController extends Controller
         $student->contact_number = $request->contact_number;
         $student->email_address = $request->email_address;
         $student->program_id = $request->program_id;
+        $student->year_level_id = $request->year_level_id;
+        $student->section_id = $request->section_id;
         $student->save();
 
         return to_route('student.index');
@@ -77,6 +85,8 @@ class StudentController extends Controller
         $student->contact_number = $request->contact_number;
         $student->email_address = $request->email_address;
         $student->program_id = $request->program_id;
+        $student->year_level_id = $request->year_level_id;
+        $student->section_id = $request->section_id;
         $student->update();
 
         return to_route('student.index');

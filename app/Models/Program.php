@@ -8,6 +8,8 @@ class Program extends Model
 {
     protected $table = 'programs';
 
+    protected $with = ['college'];
+
     protected $fillable = [
         'code', 'description'
     ];

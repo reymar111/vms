@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Status;
+use App\Models\Student;
 use App\Models\Violation;
 use Illuminate\Support\Str;
 use App\Models\OffenseLevel;
 use Illuminate\Http\Request;
 use App\Models\PenaltyAction;
-use App\Models\TransactionViolation;
 use App\Models\ViolationCategory;
+use App\Models\TransactionViolation;
 
 class TransactionViolationController extends Controller
 {
@@ -27,6 +28,7 @@ class TransactionViolationController extends Controller
             'status'
         ])->get();
 
+
         $violations = Violation::all();
         $offense_levels = OffenseLevel::all();
         $penalty_actions = PenaltyAction::all();
@@ -38,8 +40,29 @@ class TransactionViolationController extends Controller
             'offense_levels' => $offense_levels,
             'penalty_actions' => $penalty_actions,
             'statuses' => $statuses,
+        ]);
+    }
+
+    public function create()
+    {
+        $violations = Violation::all();
+        $offense_levels = OffenseLevel::all();
+        $penalty_actions = PenaltyAction::all();
+        $statuses = Status::all();
+        $transaction_number = 'VLN-'.Str::random(6);
+        $students = Student::with(['program', 'year_level', 'section'])->get();
+
+        return Inertia::render('CreateViolation',
+        [
+            'violations' => $violations,
+            'offense_levels' => $offense_levels,
+            'penalty_actions' => $penalty_actions,
+            'statuses' => $statuses,
+            'transaction_number' => $transaction_number,
+            'students' => $students,
 
         ]);
+
     }
 
     /**
