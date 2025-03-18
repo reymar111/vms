@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('penalty_action_id')->nullable();
             $table->integer('status_id')->default(1);
             $table->text('remarks')->nullable();
+            $table->text('resolution')->nullable();
             $table->timestamps();
         });
     }

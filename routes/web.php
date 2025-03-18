@@ -156,6 +156,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/store', [TransactionViolationController::class, 'store'])->name('transaction_violation.store');
         Route::get('/show/{transaction_violation}',[TransactionViolationController::class, 'show'])->name('transaction_violation.show');
         Route::get('/edit/{transaction_violation}',[TransactionViolationController::class, 'edit'])->name('transaction_violation.edit');
+        Route::patch('/resolve/{transaction_violation}',[TransactionViolationController::class, 'resolve'])->name('transaction_violation.resolve');
         Route::patch('/update/{transaction_violation}', [TransactionViolationController::class, 'update'])->name('transaction_violation.update');
         Route::delete('/destroy/{transaction_violation}', [TransactionViolationController::class, 'destroy'])->name('transaction_violation.destroy');
     });

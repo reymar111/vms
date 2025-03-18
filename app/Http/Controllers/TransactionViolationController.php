@@ -26,20 +26,22 @@ class TransactionViolationController extends Controller
             'offense_level',
             'penalty_action',
             'status'
-        ])->get();
+        ])
+        ->orderBy('created_at', 'desc')
+        ->get();
 
 
         // $violations = Violation::all();
         // $offense_levels = OffenseLevel::all();
-        // $penalty_actions = PenaltyAction::all();
-        // $statuses = Status::all();
+        $penalty_actions = PenaltyAction::all();
+        $statuses = Status::all();
 
         return Inertia::render('TransactionViolation',
         [
             'violations' => $violations,
             // 'offense_levels' => $offense_levels,
-            // 'penalty_actions' => $penalty_actions,
-            // 'statuses' => $statuses,
+            'penalty_actions' => $penalty_actions,
+            'statuses' => $statuses,
         ]);
     }
 
@@ -80,7 +82,6 @@ class TransactionViolationController extends Controller
         $violation->student_id = $request->student_id;
         $violation->violation_id = $request->violation_id;
         $violation->offense_level_id = $request->offense_level_id;
-        $violation->penalty_action_id = $request->penalty_action_id;
         $violation->status_id = 1;
         $violation->remarks = $request->remarks;
         $violation->save();
@@ -99,7 +100,13 @@ class TransactionViolationController extends Controller
 
         return Inertia::render('ViewViolation',
         [
-            'violation' => $transaction_violation,
+            'violation' => $transaction_violation->load([
+                'student',
+                'violation',
+                'offense_level',
+                'penalty_action',
+                'status'
+            ]),
             'violations' => $violations,
             'offense_levels' => $offense_levels,
             'penalty_actions' => $penalty_actions,
@@ -145,12 +152,26 @@ class TransactionViolationController extends Controller
         $transaction_violation->student_id = $request->student_id;
         $transaction_violation->violation_id = $request->violation_id;
         $transaction_violation->offense_level_id = $request->offense_level_id;
-        $transaction_violation->penalty_action_id = $request->penalty_action_id;
-        $transaction_violation->status_id = $request->status_id;
         $transaction_violation->remarks = $request->remarks;
         $transaction_violation->update();
 
         return to_route('transaction_violation.index');
+    }
+
+    public function resolve(Request $request, TransactionViolation $transaction_violation)
+    {
+
+        $request->validate([
+            'status_id' => ['required']
+        ]);
+
+        $transaction_violation->status_id = $request->status_id;
+        $transaction_violation->penalty_action_id = $request->penalty_action_id;
+        $transaction_violation->resolution = $request->resolution;
+        $transaction_violation->update();
+
+        return to_route('transaction_violation.index');
+
     }
 
     /**

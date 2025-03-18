@@ -68,38 +68,39 @@
                     <!-- Second Column (1/4) -->
                     <div class="md:col-span-3 col-span-4 grid md:grid-rows-0 gap-2">
                         <div class="md:p-5 grid grid-cols-1 md:grid-cols-2 gap-4 mb-0 p-4 bg-white shadow-xl sm:rounded-lg">
-                            <div class="col-span-1 md:col-span-2">Status: </div>
+                            <div class="col-span-1 md:col-span-2">Status: <b>{{ violation.status != null ? violation.status.name : '' }}</b></div>
+                            <div class="col-span-1 md:col-span-2">Penalty Imposed: <b>{{ violation.penalty_action != null ? violation.penalty_action.name : '' }}</b></div>
+                            <div class="col-span-1 md:col-span-2">Resolution: <b>{{ violation.resolution }}</b></div>
 
                         </div>
 
                         <div class="md:p-5 grid grid-cols-1 md:grid-cols-2 md:grid-rows-0 gap-4 mb-0 p-4 bg-white shadow-xl sm:rounded-lg">
                             <div class="col-span-1 md:col-span-2">Student info</div>
-                            <div>
-                                ID Number
-                                <input type="text" v-model="selected_student.id_number" disabled readony class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="ID Number" required />
-                            </div>
-                            <div>
-                                Student Name
-                                <input type="text" v-model="selected_student.full_name" disabled readony class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Name" required />
-                            </div>
-                            <div>
-                                Email Address
-                                <input type="text" v-model="selected_student.email_address" disabled readony class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Email Address" required />
-
-                            </div>
-                            <div>
-                                Contact Number
-                                <input type="text" v-model="selected_student.contact_number" disabled readony class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Contact Number" required />
-                            </div>
-                            <div>
-                                Year Level
-                                <input type="text" v-model="selected_student.year_level.name" disabled readony class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Year Level" required />
-                            </div>
-                            <div>
-                                Section
-                                <input type="text" v-model="selected_student.section.name" disabled readony class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Section" required />
+                            <div class="relative z-0">
+                                <input type="text" v-model="selected_student.id_number" id="id_number" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " disabled />
+                                <label for="id_number" class="absolute text-sm text-gray-400 dark:text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">ID Number</label>
                             </div>
 
+                            <div class="relative z-0">
+                                <input type="text" v-model="selected_student.full_name" id="student_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " disabled />
+                                <label for="student_name" class="absolute text-sm text-gray-400 dark:text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Student Name</label>
+                            </div>
+                            <div class="relative z-0">
+                                <input type="text" v-model="selected_student.email_address" id="email_address" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " disabled />
+                                <label for="email_address" class="absolute text-sm text-gray-400 dark:text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Email Address</label>
+                            </div>
+                            <div class="relative z-0">
+                                <input type="text" v-model="selected_student.contact_number" id="contact_number" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " disabled />
+                                <label for="contact_number" class="absolute text-sm text-gray-400 dark:text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Contact Number</label>
+                            </div>
+                            <div class="relative z-0">
+                                <input type="text" v-model="selected_student.year_level.name" id="year_level" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " disabled />
+                                <label for="year_level" class="absolute text-sm text-gray-400 dark:text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Year Level</label>
+                            </div>
+                            <div class="relative z-0">
+                                <input type="text" v-model="selected_student.section.name" id="section" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " disabled />
+                                <label for="section" class="absolute text-sm text-gray-400 dark:text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Section</label>
+                            </div>
                         </div>
                         <div class="md:p-5 grid grid-cols-1 md:grid-cols-2 gap-4 mb-0 p-4 bg-white shadow-xl sm:rounded-lg">
                             <div class="col-span-1 md:col-span-2">Violation Committed</div>
