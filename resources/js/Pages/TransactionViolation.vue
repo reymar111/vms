@@ -90,33 +90,43 @@
                         <thead class="bg-gray-100">
                             <tr>
                                 <th class="px-4 py-2 text-left text-gray-700 border-b">#</th>
-                                <th class="px-4 py-2 text-left text-gray-700 border-b">Code</th>
-                                <th class="px-4 py-2 text-left text-gray-700 border-b">Name</th>
-                                <th class="px-4 py-2 text-left text-gray-700 border-b">Description</th>
-                                <th class="px-4 py-2 text-left text-gray-700 border-b">Category</th>
+                                <th class="px-4 py-2 text-left text-gray-700 border-b">Transaction #</th>
+                                <th class="px-4 py-2 text-left text-gray-700 border-b">ID #</th>
+                                <th class="px-4 py-2 text-left text-gray-700 border-b">Student</th>
+                                <th class="px-4 py-2 text-left text-gray-700 border-b">Violation</th>
+                                <th class="px-4 py-2 text-left text-gray-700 border-b">Status</th>
                                 <th class="px-4 py-2 text-left text-gray-700 border-b">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="border-b" v-for="(item, index) in filteredViolations" :key="index">
                                 <td class="px-4 py-2">{{ index + 1 }}</td>
-                                <td class="px-4 py-2">{{ item.code }}</td>
-                                <td class="px-4 py-2">{{ item.name }}</td>
-                                <td class="px-4 py-2">{{ item.description }}</td>
-                                <td class="px-4 py-2">{{ item.category ? item.category.name : '' }}</td>
+                                <td class="px-4 py-2">{{ item.transaction_number }}</td>
+                                <td class="px-4 py-2">{{ item.student != null ? item.student.id_number : '' }}</td>
+                                <td class="px-4 py-2">{{ item.student != null ? item.student.full_name : '' }}</td>
+                                <td class="px-4 py-2">{{ item.violation != null ? item.violation.name : '' }}</td>
+                                <td class="px-4 py-2">{{ item.status ? item.status.name : '' }}</td>
                                 <td class="px-4 py-2 flex space-x-2">
-                                    <button @click="editItem(item)" type="button" class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center me-2">
-                                    <svg class="w-6 h-6 text-white-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
-                                    </svg>
-                                        Edit
-                                    </button>
-                                    <button  @click="OpenDeleteForm(item)" type="button" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center me-2">
-                                        <svg class="w-6 h-6 text-white-800 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                                    <Link :href="route('transaction_violation.show', item.id)" type="button" class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center me-2">
+                                        <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
+                                            <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                                         </svg>
-                                        Delete
+                                        View
+                                    </Link>
+                                    <button  @click="OpenDeleteForm(item)" type="button" class="text-white bg-indigo-500 hover:bg-indigo-600 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center me-2">
+                                        <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.484 9.166 15 7h5m0 0-3-3m3 3-3 3M4 17h4l1.577-2.253M4 7h4l7 10h5m0 0-3 3m3-3-3-3"/>
+                                        </svg>
+
+                                        Resolve
                                     </button>
+                                    <Link :href="route('transaction_violation.edit', item.id)" type="button" class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center me-2">
+                                        <svg class="w-6 h-6 text-white-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                                        </svg>
+                                        Edit
+                                    </Link>
                                 </td>
                             </tr>
                             <!-- More rows here -->
@@ -130,89 +140,6 @@
 
         </div>
 
-        <!-- Main modal -->
-        <div  v-if="form.active" id="default-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
-            <div class="relative p-4 w-full max-w-2xl max-h-full">
-                <!-- Modal content -->
-                <div class="relative bg-white rounded-lg shadow-sm ">
-                    <!-- Modal header -->
-                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
-                        <h3 class="text-xl font-semibold text-gray-900 ">
-                            {{ form.is_editing ? 'Edit' : 'Create' }} Violation
-                        </h3>
-                        <button @click="closeForm" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center " data-modal-hide="default-modal">
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                            </svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="p-4 md:p-5 space-y-4">
-                        <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Code</label>
-                            <input v-model="form.code" type="text" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
-                        </div>
-
-                        <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Name</label>
-                            <input v-model="form.name" type="text" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
-                        </div>
-
-                        <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Description</label>
-                            <input v-model="form.description" type="text" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
-                        </div>
-
-                        <div>
-                            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Violation Category</label>
-                            <select v-model="form.violation_category_id" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option v-for="(item, index) in violation_categories" :key="index" :value="item.id">{{ item.name }}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <!-- Modal footer -->
-                    <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
-                        <button @click="save" v-if="form.is_editing === false" data-modal-hide="default-modal" type="button" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Save</button>
-                        <button @click="update" v-if="form.is_editing" data-modal-hide="default-modal" type="button" class="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Update</button>
-                        <button @click="closeForm" data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 ">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Main modal -->
-        <div  v-if="delete_form.active" id="default-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
-            <div class="relative p-4 w-full max-w-2xl max-h-full">
-                <!-- Modal content -->
-                <div class="relative bg-white rounded-lg shadow-sm ">
-                    <!-- Modal header -->
-                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
-                        <h3 class="text-xl font-semibold text-gray-900 ">
-                            Delete this violation?
-                        </h3>
-                        <button @click="closeForm" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center " data-modal-hide="default-modal">
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                            </svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="p-4 md:p-5 space-y-4">
-                        <div>
-                            {{ delete_form.name }}
-                        </div>
-                    </div>
-                    <!-- Modal footer -->
-                    <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
-                        <button @click="deleteItem" data-modal-hide="default-modal" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Yes, Delete</button>
-                        <button @click="CloseDeleteForm" data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 ">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
 
     </AuthenticatedLayout>
 </template>
@@ -222,7 +149,7 @@ import { useForm, Link, Head } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 export default {
-    props: ['violations', 'violation_categories'],
+    props: ['violations', 'offense_levels', 'penalty_actions', 'statuses'],
     components: {
         AuthenticatedLayout,
         Link,
@@ -313,7 +240,7 @@ export default {
         },
 
         save() {
-            this.form.post('/violation/store', {
+            this.form.post('/transaction_violation/store', {
                 onSuccess: () => {
                     this.closeForm()
                     this.is_created = true
@@ -325,7 +252,7 @@ export default {
         },
 
         update() {
-            this.form.patch('/violation/update/'+this.form.id, {
+            this.form.patch('/transaction_violation/update/'+this.form.id, {
                 onSuccess: () => {
                     this.closeForm()
                     this.is_updated = true
@@ -337,7 +264,7 @@ export default {
         },
 
         deleteItem() {
-            this.form.delete('/violation/destroy/'+this.delete_form.id, {
+            this.form.delete('/transaction_violation/destroy/'+this.delete_form.id, {
                 onSuccess: () => {
                     this.CloseDeleteForm()
                     this.is_deleted = true

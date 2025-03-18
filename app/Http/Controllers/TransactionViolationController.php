@@ -29,23 +29,23 @@ class TransactionViolationController extends Controller
         ])->get();
 
 
-        $violations = Violation::all();
-        $offense_levels = OffenseLevel::all();
-        $penalty_actions = PenaltyAction::all();
-        $statuses = Status::all();
+        // $violations = Violation::all();
+        // $offense_levels = OffenseLevel::all();
+        // $penalty_actions = PenaltyAction::all();
+        // $statuses = Status::all();
 
         return Inertia::render('TransactionViolation',
         [
             'violations' => $violations,
-            'offense_levels' => $offense_levels,
-            'penalty_actions' => $penalty_actions,
-            'statuses' => $statuses,
+            // 'offense_levels' => $offense_levels,
+            // 'penalty_actions' => $penalty_actions,
+            // 'statuses' => $statuses,
         ]);
     }
 
     public function create()
     {
-        $violations = Violation::all();
+        $violations = Violation::with('category')->get();
         $offense_levels = OffenseLevel::all();
         $penalty_actions = PenaltyAction::all();
         $statuses = Status::all();
@@ -81,13 +81,55 @@ class TransactionViolationController extends Controller
         $violation->violation_id = $request->violation_id;
         $violation->offense_level_id = $request->offense_level_id;
         $violation->penalty_action_id = $request->penalty_action_id;
-        $violation->status_id = $request->status_id;
+        $violation->status_id = 1;
         $violation->remarks = $request->remarks;
         $violation->save();
 
         return to_route('transaction_violation.index');
 
     }
+
+    public function show(TransactionViolation $transaction_violation)
+    {
+        $violations = Violation::with('category')->get();
+        $offense_levels = OffenseLevel::all();
+        $penalty_actions = PenaltyAction::all();
+        $statuses = Status::all();
+        $students = Student::with(['program', 'year_level', 'section'])->get();
+
+        return Inertia::render('ViewViolation',
+        [
+            'violation' => $transaction_violation,
+            'violations' => $violations,
+            'offense_levels' => $offense_levels,
+            'penalty_actions' => $penalty_actions,
+            'statuses' => $statuses,
+            'students' => $students,
+        ]);
+
+    }
+
+    public function edit(TransactionViolation $transaction_violation)
+    {
+        $violations = Violation::with('category')->get();
+        $offense_levels = OffenseLevel::all();
+        $penalty_actions = PenaltyAction::all();
+        $statuses = Status::all();
+        $students = Student::with(['program', 'year_level', 'section'])->get();
+
+        return Inertia::render('EditViolation',
+        [
+            'violation' => $transaction_violation,
+            'violations' => $violations,
+            'offense_levels' => $offense_levels,
+            'penalty_actions' => $penalty_actions,
+            'statuses' => $statuses,
+            'students' => $students,
+
+        ]);
+
+    }
+
 
     /**
      * Update the specified resource in storage.

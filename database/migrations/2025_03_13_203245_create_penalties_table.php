@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('violation_id');
             $table->integer('offense_level_id');
-            $table->integer('action_id');
+            // $table->integer('action_id');
             $table->timestamps();
         });
     }

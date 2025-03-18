@@ -1,12 +1,12 @@
 <template>
     <AuthenticatedLayout>
-        <Head title="Create Violation" />
+        <Head title="Edit Violation" />
 
         <div class="py-1">
             <div class="mx-auto sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-gray-100 shadow-lg sm:rounded-lg">
                     <div class="p-6 text-gray-900 flex flex-col mt-0 md:flex-row md:justify-between md:items-center space-y-1 md:space-y-0 ">
-                        <h3 class="text-2xl font-bold ">Create Violation</h3>
+                        <h3 class="text-2xl font-bold ">Edit Violation: {{ violation.transaction_number }}</h3>
                     </div>
 
                 </div>
@@ -40,28 +40,19 @@
                             </select>
                         </div>
 
-<!--
-                        <div class="mt-3">
-                            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Penalty Imposed</label>
-                            <select v-model="form.penalty_action_id" @change="getSelestedPenaltyAction" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option v-for="(item, index) in penalty_actions" :key="index" :value="item.id">{{item.name}}</option>
-                            </select>
-                        </div> -->
-
                         <div class="mt-3">
                             <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Remarks</label>
                             <textarea id="message" v-model="form.remarks" rows="5" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your remarks here..."></textarea>
 
                         </div>
 
-
-
                         <div class="text-gray-900 flex mt-7 w-full gap-2">
-                            <button @click="save" data-modal-hide="default-modal"
+
+                            <button @click="update" data-modal-hide="default-modal"
                                 type="button"
-                                class="flex-1 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300
+                                class="flex-1 text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300
                                     font-medium rounded-lg text-sm px-5 py-4 text-center">
-                                Save
+                                Save Changes
                             </button>
 
                             <Link :href="route('transaction_violation.index')" data-modal-hide="default-modal"
@@ -145,7 +136,7 @@ import { useForm, Link, Head } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 export default {
-    props: ['students', 'violations', 'offense_levels', 'penalty_actions', 'statuses', 'transaction_number'],
+    props: ['violation', 'students', 'violations', 'offense_levels', 'penalty_actions', 'statuses', 'transaction_number'],
     components: {
         AuthenticatedLayout,
         Link,
@@ -233,9 +224,20 @@ export default {
         }
     },
     mounted() {
-        this.form.transaction_number = this.transaction_number
+        this.mountData()
     },
     methods: {
+        mountData() {
+            this.form.id = this.violation.id
+            this.form.transaction_number = this.violation.transaction_number
+            this.form.student_id = this.violation.student_id
+            this.form.violation_id = this.violation.violation_id
+            this.form.offense_level_id = this.violation.offense_level_id
+            this.form.penalty_action_id = this.violation.penalty_action_id
+            this.form.status_id = this.violation.status_id
+            this.form.remarks = this.violation.remarks
+        },
+
         getStudentInfo() {
             this.selected_student = this.students.find(student => student.id === this.form.student_id);
         },
