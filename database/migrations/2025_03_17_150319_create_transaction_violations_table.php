@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('transaction_violations', function (Blueprint $table) {
             $table->id();
             $table->string('transaction_number');
+            $table->integer('academic_year_id');
             $table->integer('student_id');
             $table->integer('violation_id');
             $table->integer('offense_level_id')->nullable();

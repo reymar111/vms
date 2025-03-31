@@ -289,7 +289,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'name' => 'John Doe',
+                'name' => 'James Smith',
                 'email' => 'user@user.com',
                 'password' => bcrypt('1234567890'),
                 'created_at' => now(),

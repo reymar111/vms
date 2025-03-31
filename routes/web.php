@@ -1,38 +1,33 @@
 <?php
 
-use App\Http\Controllers\AcademicYearController;
+use Inertia\Inertia;
+use App\Models\OffenseLevel;
+use App\Models\ViolationCategory;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\CollegeController;
-use App\Http\Controllers\OffenseLevelController;
-use App\Http\Controllers\PenaltyActionController;
 use App\Http\Controllers\PenaltyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\SectionController;
-use App\Http\Controllers\SemesterController;
-use App\Http\Controllers\StatusController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\TransactionViolationController;
-use App\Http\Controllers\ViolationCategoryController;
+use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\ViolationController;
 use App\Http\Controllers\YearLevelController;
-use App\Models\OffenseLevel;
-use App\Models\ViolationCategory;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\AcademicYearController;
+use App\Http\Controllers\OffenseLevelController;
+use App\Http\Controllers\PenaltyActionController;
+use App\Http\Controllers\ViolationCategoryController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\TransactionViolationController;
 
 Route::get('/', function () {
     return Inertia::render('Auth/Login', [
         'canResetPassword' => Route::has('password.request'),
         'status' => session('status'),
     ]);
-
-    // return Inertia::render('Welcome', [
-    //     'canLogin' => Route::has('login'),
-    //     'canRegister' => Route::has('register'),
-    //     'laravelVersion' => Application::VERSION,
-    //     'phpVersion' => PHP_VERSION,
-    // ]);
 });
 
 Route::get('/dashboard', function () {
@@ -45,6 +40,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 // SETTINGS
+    Route::prefix('user')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('user.index');
+        Route::post('/store', [UserController::class, 'store'])->name('user.store');
+        Route::patch('/update/{user}', [UserController::class, 'update'])->name('user.update');
+        Route::delete('/destroy/{user}', [UserController::class, 'destroy'])->name('user.destroy');
+    });
+
     // student
     Route::prefix('student')->group(function() {
         Route::get('/',[StudentController::class, 'index'])->name('student.index');
@@ -159,6 +161,15 @@ Route::middleware('auth')->group(function () {
         Route::patch('/resolve/{transaction_violation}',[TransactionViolationController::class, 'resolve'])->name('transaction_violation.resolve');
         Route::patch('/update/{transaction_violation}', [TransactionViolationController::class, 'update'])->name('transaction_violation.update');
         Route::delete('/destroy/{transaction_violation}', [TransactionViolationController::class, 'destroy'])->name('transaction_violation.destroy');
+    });
+
+    Route::prefix('reports')->group(function() {
+        Route::get('violation_per_academic_year', [ReportController::class, 'violationsPerAcademicYear'])->name('reports.violations_per_academic_year');
+        Route::get('violation_per_college', [ReportController::class, 'violationsPerCollege'])->name('reports.violations_per_college');
+        Route::get('monthly_violations', [ReportController::class, 'monthlyViolations'])->name('reports.monthly_violations');
+        Route::get('top_violations', [ReportController::class, 'topViolations'])->name('reports.top_violations');
+        Route::get('violation_summary', [ReportController::class, 'violationSummary'])->name('reports.violation_summary');
+        Route::get('violation_status', [ReportController::class, 'violationStatus'])->name('reports.violation_status');
     });
 
 });

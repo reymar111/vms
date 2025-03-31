@@ -90,7 +90,7 @@
                         <thead class="bg-gray-100">
                             <tr>
                                 <th class="px-4 py-2 text-left text-gray-700 border-b">#</th>
-                                <th class="px-4 py-2 text-left text-gray-700 border-b">Transaction #</th>
+                                <th class="px-4 py-2 text-left text-gray-700 border-b">Violation #</th>
                                 <th class="px-4 py-2 text-left text-gray-700 border-b">ID #</th>
                                 <th class="px-4 py-2 text-left text-gray-700 border-b">Student</th>
                                 <th class="px-4 py-2 text-left text-gray-700 border-b">Violation</th>

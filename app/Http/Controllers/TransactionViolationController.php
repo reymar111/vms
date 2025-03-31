@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AcademicYear;
 use Inertia\Inertia;
 use App\Models\Status;
 use App\Models\Student;
@@ -34,6 +35,7 @@ class TransactionViolationController extends Controller
         // $violations = Violation::all();
         // $offense_levels = OffenseLevel::all();
         $penalty_actions = PenaltyAction::all();
+
         $statuses = Status::all();
 
         return Inertia::render('TransactionViolation',
@@ -53,6 +55,7 @@ class TransactionViolationController extends Controller
         $statuses = Status::all();
         $transaction_number = 'VLN-'.Str::random(6);
         $students = Student::with(['program', 'year_level', 'section'])->get();
+        $academic_years = AcademicYear::with('semester')->orderBy('year', 'desc')->orderBy('semester_id', 'asc')->get();
 
         return Inertia::render('CreateViolation',
         [
@@ -62,7 +65,7 @@ class TransactionViolationController extends Controller
             'statuses' => $statuses,
             'transaction_number' => $transaction_number,
             'students' => $students,
-
+            'academic_years' => $academic_years,
         ]);
 
     }
@@ -75,12 +78,14 @@ class TransactionViolationController extends Controller
         $request->validate([
             'student_id' => ['required'],
             'violation_id' => ['required'],
+            'academic_year_id' => ['required'],
         ]);
 
         $violation = new TransactionViolation();
         $violation->transaction_number = 'VLN-'.Str::random(6);
         $violation->student_id = $request->student_id;
         $violation->violation_id = $request->violation_id;
+        $violation->academic_year_id = $request->academic_year_id;
         $violation->offense_level_id = $request->offense_level_id;
         $violation->status_id = 1;
         $violation->remarks = $request->remarks;
@@ -97,6 +102,7 @@ class TransactionViolationController extends Controller
         $penalty_actions = PenaltyAction::all();
         $statuses = Status::all();
         $students = Student::with(['program', 'year_level', 'section'])->get();
+        $academic_years = AcademicYear::with('semester')->orderBy('year', 'desc')->orderBy('semester_id', 'asc')->get();
 
         return Inertia::render('ViewViolation',
         [
@@ -112,6 +118,7 @@ class TransactionViolationController extends Controller
             'penalty_actions' => $penalty_actions,
             'statuses' => $statuses,
             'students' => $students,
+            'academic_years' => $academic_years,
         ]);
 
     }
@@ -123,6 +130,7 @@ class TransactionViolationController extends Controller
         $penalty_actions = PenaltyAction::all();
         $statuses = Status::all();
         $students = Student::with(['program', 'year_level', 'section'])->get();
+        $academic_years = AcademicYear::with('semester')->orderBy('year', 'desc')->orderBy('semester_id', 'asc')->get();
 
         return Inertia::render('EditViolation',
         [
@@ -132,6 +140,7 @@ class TransactionViolationController extends Controller
             'penalty_actions' => $penalty_actions,
             'statuses' => $statuses,
             'students' => $students,
+            'academic_years' => $academic_years,
 
         ]);
 
@@ -150,6 +159,7 @@ class TransactionViolationController extends Controller
 
         $transaction_violation->transaction_number = 'VLN-'.Str::random(6);
         $transaction_violation->student_id = $request->student_id;
+        $transaction_violation->academic_year_id = $request->academic_year_id;
         $transaction_violation->violation_id = $request->violation_id;
         $transaction_violation->offense_level_id = $request->offense_level_id;
         $transaction_violation->remarks = $request->remarks;

@@ -20,6 +20,13 @@
                         </div>
 
                         <div class="mt-3">
+                            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Academic Year</label>
+                            <select v-model="form.academic_year_id" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option v-for="(item, index) in academic_years" :key="index" :value="item.id">{{item.semester != null ? item.semester.name+' - '+item.year : ''}}</option>
+                            </select>
+                        </div>
+
+                        <div class="mt-3">
                             <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Student</label>
                             <select v-model="form.student_id" @change="getStudentInfo" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option v-for="(item, index) in students" :key="index" :value="item.id">{{item.id_number}} - {{ item.full_name }}</option>
@@ -145,7 +152,7 @@ import { useForm, Link, Head } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 export default {
-    props: ['students', 'violations', 'offense_levels', 'penalty_actions', 'statuses', 'transaction_number'],
+    props: ['students', 'violations', 'offense_levels', 'penalty_actions', 'statuses', 'transaction_number', 'academic_years'],
     components: {
         AuthenticatedLayout,
         Link,
@@ -160,6 +167,7 @@ export default {
                 violation_id: '',
                 offense_level_id: '',
                 penalty_action_id: '',
+                academic_year_id: '',
                 status_id: '',
                 remarks: '',
                 active: false,
@@ -261,6 +269,7 @@ export default {
             this.form.id = ''
             this.form.transaction_number = ''
             this.form.student_id = ''
+            this.form.academic_year_id = ''
             this.form.violation_id = ''
             this.form.offense_level_id = ''
             this.form.penalty_action_id = ''
