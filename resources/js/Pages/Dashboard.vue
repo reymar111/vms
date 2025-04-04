@@ -15,16 +15,34 @@ import { Head } from '@inertiajs/vue3';
             </h2>
         </template>
 
-        <div class="py-12">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div
-                    class="overflow-hidden bg-white shadow-sm sm:rounded-lg"
-                >
-                    <div class="p-6 text-gray-900">
-                        You're logged in!
+        <div class="py-1">
+            <div class="mx-auto max-w-12xl sm:px-6 lg:px-8">
+                <!-- Main Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Sales Report -->
+                    <div class="md:col-span-2 bg-white p-6 rounded-lg shadow-lg">
+
+                    </div>
+
+                    <!-- Statistics Panel -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+
                     </div>
                 </div>
-            </div>
+
+                <!-- Secondary Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+
+                    </div>
+                </div>
         </div>
+    </div>
     </AuthenticatedLayout>
 </template>
