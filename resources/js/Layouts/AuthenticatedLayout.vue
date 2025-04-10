@@ -60,7 +60,7 @@ export default {
               class="mr-3 h-8"
               alt="Flowbite Logo"
             />
-            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">VMS</span>
+            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Violation Management System</span>
           </a>
         </div>
       </div>
@@ -104,8 +104,8 @@ export default {
         </form> -->
         <ul class="space-y-2">
           <li>
-            <a
-              href="#"
+            <Link
+              :href="route('dashboard')"
               class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             >
               <svg
@@ -119,7 +119,7 @@ export default {
                 <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
               </svg>
               <span class="ml-3">Dashboard</span>
-            </a>
+            </Link>
           </li>
           <li>
             <Link
@@ -185,7 +185,7 @@ export default {
 
             </a>
           </li> -->
-          <li>
+          <!-- <li>
             <button
               type="button"
               class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
@@ -200,7 +200,7 @@ export default {
                 >Analytics</span
               >
             </button>
-          </li>
+          </li> -->
         </ul>
         <!-- reports -->
         <ul
@@ -477,12 +477,10 @@ export default {
       </div>
     </aside>
 
-    <main class="p-4 md:ml-64 h-auto pt-20 bg-gray-300">
-
-        <div class="rounded-lg" >
-            <slot />
-        </div>
-
-    </main>
+    <main class="p-4 md:ml-64 min-h-screen pt-20 bg-gray-300">
+    <div class="rounded-lg">
+        <slot />
+    </div>
+</main>
   </div>
 </template>
