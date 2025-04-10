@@ -233,6 +233,10 @@ export default {
     },
     mounted() {
         this.mountData()
+        this.getStudentInfo()
+        this.getViolationInfo()
+        this.getOffenseLevelInfo()
+        this.getSelestedPenaltyAction()
     },
     methods: {
         mountData() {

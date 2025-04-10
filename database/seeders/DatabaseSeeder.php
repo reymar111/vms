@@ -330,21 +330,21 @@ class DatabaseSeeder extends Seeder
         }
 
 
-        foreach (range(1, 50) as $index) {
-            Student::create([
-                'id_number' => fake()->unique()->numerify('2025####'),
-                'first_name' => fake()->firstName,
-                'middle_name' => fake()->firstName,
-                'last_name' => fake()->lastName,
-                'ext_name' => fake()->randomElement(['Jr.', 'Sr.', 'III', null]),
-                'address' => fake()->address,
-                'contact_number' => fake()->phoneNumber,
-                'email_address' => fake()->unique()->safeEmail,
-                'program_id' => \App\Models\Program::inRandomOrder()->first()->id ?? 1,
-                'year_level_id' => \App\Models\YearLevel::inRandomOrder()->first()->id ?? 1,
-                'section_id' => \App\Models\Section::inRandomOrder()->first()->id ?? 1,
-            ]);
-        }
+        // foreach (range(1, 50) as $index) {
+        //     Student::create([
+        //         'id_number' => fake()->unique()->numerify('2025####'),
+        //         'first_name' => fake()->firstName,
+        //         'middle_name' => fake()->firstName,
+        //         'last_name' => fake()->lastName,
+        //         'ext_name' => fake()->randomElement(['Jr.', 'Sr.', 'III', null]),
+        //         'address' => fake()->address,
+        //         'contact_number' => fake()->phoneNumber,
+        //         'email_address' => fake()->unique()->safeEmail,
+        //         'program_id' => \App\Models\Program::inRandomOrder()->first()->id ?? 1,
+        //         'year_level_id' => \App\Models\YearLevel::inRandomOrder()->first()->id ?? 1,
+        //         'section_id' => \App\Models\Section::inRandomOrder()->first()->id ?? 1,
+        //     ]);
+        // }
 
         $status = [
             'New',
