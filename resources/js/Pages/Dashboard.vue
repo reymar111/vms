@@ -100,7 +100,7 @@ export default {
                     },
                     dataLabels: { enabled: true },
                     xaxis: {
-                        categories: this.violation_status.map(item => item.status),
+                        categories: [],
                         labels: { style: { fontSize: '14px' } },
                     },
                     yaxis: { title: { text: 'Number of Violations' } },
@@ -111,7 +111,7 @@ export default {
                     },
                     colors: ['#6366f1'],
                 },
-                series: [{ name: 'Violations', data: this.violation_status.map(item => item.total_cases) }],
+                series: [{ name: 'Violations', data: [] }],
             },
 
             top_viol: {
@@ -132,7 +132,7 @@ export default {
                         labels: { formatter: val => `${val}` },
                     },
                     yaxis: {
-                        categories: this.top_violations.map(item => item.name),
+                        categories: [],
                         labels: { style: { fontSize: '14px', fontWeight: 500 } },
                     },
                     tooltip: {
@@ -142,9 +142,14 @@ export default {
                     },
                     colors: ['#f97316'],
                 },
-                series: [{ name: 'Violations', data: this.top_violations.map(item => item.total) }],
+                series: [{ name: 'Violations', data: [] }],
             },
         };
+    },
+    computed: {
+        violAcadYerSeries() {
+            return this.violations_per_academic_year.map(item => item.total_violations);
+        },
     },
     mounted() {
         // violation summary
@@ -159,6 +164,14 @@ export default {
         // violations per academic year
         this.viol_per_academic_year.chartOptions.xaxis.categories = this.violations_per_academic_year.map(item => item.academic_year);
         this.viol_per_academic_year.series[0].data = this.violations_per_academic_year.map(item => item.total_violations);
+
+        // violation status
+        this.viol_status.chartOptions.xaxis.categories = this.violation_status.map(item => item.status)
+        this.viol_status.series[0].data = this.violation_status.map(item => item.total_cases)
+
+        // top violations
+        this.top_viol.chartOptions.yaxis.categories = this.top_violations.map(item => item.name)
+        this.top_viol.series[0].data = this.top_violations.map(item => item.total)
     },
     methods: {
         filterData() {
@@ -179,6 +192,14 @@ export default {
                     // violations per academic year
                     this.viol_per_academic_year.chartOptions.xaxis.categories = this.violations_per_academic_year.map(item => item.academic_year);
                     this.viol_per_academic_year.series[0].data = this.violations_per_academic_year.map(item => item.total_violations);
+
+                    // violation status
+                    this.viol_status.chartOptions.xaxis.categories = this.violation_status.map(item => item.status)
+                    this.viol_status.series[0].data = this.violation_status.map(item => item.total_cases)
+
+                    // top violations
+                    this.top_viol.chartOptions.yaxis.categories = this.top_violations.map(item => item.name)
+                    this.top_viol.series[0].data = this.top_violations.map(item => item.total)
                 },
             });
         },
@@ -194,6 +215,14 @@ export default {
                 // violations per academic year
                 this.viol_per_academic_year.chartOptions.xaxis.categories = []
                 this.viol_per_academic_year.series = [{ name: 'Violations', data: [] }]
+
+                // violations per academic year
+                this.viol_status.chartOptions.xaxis.categories = []
+                this.viol_status.series = [{ name: 'Violations', data: [] }]
+
+                // violations per academic year
+                this.top_viol.chartOptions.yaxis.categories = []
+                this.top_viol.series = [{ name: 'Violations', data: [] }]
         },
 
 
@@ -406,18 +435,6 @@ export default {
                 </div>
 
                 <div class="grid grid-cols-12 gap-4 mt-4">
-                    <div class="col-span-12 bg-white p-6 rounded-lg shadow-lg">
-                        <h2 class="text-lg font-semibold mb-4">Violation/Academic Year</h2>
-                        <div class="bg-gray-200 h-auto rounded-lg">
-                            <apexchart
-                                ref="violationsPerYear"
-                                type="bar"
-                                height="450"
-                                :options="viol_per_academic_year.chartOptions"
-                                :series="viol_per_academic_year.series"
-                            />
-                        </div>
-                    </div>
 
                     <div class="col-span-12 md:col-span-6 bg-white p-6 rounded-lg shadow-lg">
                         <h2 class="text-lg font-semibold mb-4">Violation Status</h2>
@@ -444,6 +461,21 @@ export default {
                                 />
                         </div>
                     </div>
+
+                    <div class="col-span-12 bg-white p-6 rounded-lg shadow-lg">
+                        <h2 class="text-lg font-semibold mb-4">Violation/Academic Year</h2>
+                        <div class="bg-gray-200 h-auto rounded-lg">
+                            <apexchart
+                                ref="violationsPerYear"
+                                type="bar"
+                                height="450"
+                                :options="viol_per_academic_year.chartOptions"
+                                :series="viol_per_academic_year.series"
+                            />
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>

@@ -36,30 +36,54 @@ class DashboardController extends Controller
             ->get();
 
 
-        $monthly_violations = DB::table('transaction_violations')
+            $monthly_violations = DB::table('transaction_violations')
+            ->join('academic_years', 'transaction_violations.academic_year_id', '=', 'academic_years.id')
+            ->when($request->current_year, function ($query) use ($request) {
+                $query->where('academic_years.year', $request->current_year);
+            })
             ->select(
-                DB::raw("DATE_FORMAT(created_at, '%M') as month"), // Full month name
-                DB::raw("MONTH(created_at) as month_number"), // Needed for correct sorting
-                DB::raw("YEAR(created_at) as year"), // Grouping by year to avoid mix-ups
-                DB::raw("COUNT(id) as total_violations")
+                DB::raw("YEAR(transaction_violations.created_at) as year"),
+                DB::raw("MONTH(transaction_violations.created_at) as month_number"),
+                DB::raw("DATE_FORMAT(transaction_violations.created_at, '%M') as month"),
+                DB::raw("COUNT(transaction_violations.id) as total_violations")
             )
-            ->groupBy('year', 'month', 'month_number')
+            ->groupBy(
+                DB::raw("YEAR(transaction_violations.created_at)"),
+                DB::raw("MONTH(transaction_violations.created_at)"),
+                DB::raw("DATE_FORMAT(transaction_violations.created_at, '%M')")
+            )
             ->orderBy('year')
-            ->orderBy('month_number') // Ensures months are sorted correctly
+            ->orderBy('month_number')
             ->get();
 
+
+
             $violations_per_academic_year = DB::table('transaction_violations')
-                ->join('academic_years', 'transaction_violations.academic_year_id', '=', 'academic_years.id')
-                ->join('semesters', 'academic_years.semester_id', '=', 'semesters.id')
-                ->select(
-                    DB::raw("CONCAT(academic_years.code, ' - ', semesters.name) as academic_year"),
-                    DB::raw('COUNT(transaction_violations.id) as total_violations')
-                )
-                ->when($current_year, function ($query) use ($current_year) {
-                    $query->where('academic_years.year', $current_year);
-                })
-                ->groupBy('academic_years.code', 'semesters.name')
-                ->get();
+            ->join('academic_years', 'transaction_violations.academic_year_id', '=', 'academic_years.id')
+            ->join('semesters', 'academic_years.semester_id', '=', 'semesters.id')
+            ->select(
+                DB::raw("CONCAT(academic_years.code, ' - ', semesters.name) as academic_year"),
+                DB::raw('COUNT(transaction_violations.id) as total_violations'),
+                'academic_years.year',
+                'academic_years.semester_id'
+            )
+            ->when($current_year, function ($query) use ($current_year) {
+                $query->where('academic_years.year', $current_year);
+            })
+            ->groupBy(
+                'academic_years.code',
+                'semesters.name',
+                'academic_years.year',
+                'academic_years.semester_id'
+            )
+            ->orderBy('academic_years.year', 'desc')
+            ->orderBy('academic_years.semester_id', 'desc')
+            ->get()
+            ->map(function ($item) {
+                // Optionally remove year and semester_id from the final output
+                unset($item->year, $item->semester_id);
+                return $item;
+            });
 
 
         $violation_status = DB::table('transaction_violations as tv')
@@ -78,6 +102,10 @@ class DashboardController extends Controller
 
         $top_violations = DB::table('transaction_violations')
             ->join('violations', 'transaction_violations.violation_id', '=', 'violations.id')
+            ->join('academic_years', 'transaction_violations.academic_year_id', '=', 'academic_years.id')
+            ->when($current_year, function ($query) use ($current_year) {
+                $query->where('academic_years.year', $current_year);
+            })
             ->select(
                 'violations.name',
                 DB::raw('COUNT(transaction_violations.id) as total')
